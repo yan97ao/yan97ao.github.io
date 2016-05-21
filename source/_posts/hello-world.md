@@ -17,3 +17,7 @@ int main(){
 	{printf("hello hexo\n")}
   }
 ```
+
+{% plantuml %}
+    Bob->Alice : hello
+{% endplantuml %}
