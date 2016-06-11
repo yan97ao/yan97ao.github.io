@@ -6,10 +6,11 @@ tags:
 	- 分布式
 categories: tech
 ---
-读到了三篇非常不错的文章：
+读到了四篇非常不错的文章：
 [1] https://zhuanlan.zhihu.com/p/20399316
 [2] https://codahale.com/you-cant-sacrifice-partition-tolerance/
 [3] http://www.infoq.com/cn/articles/cap-twelve-years-later-how-the-rules-have-changed/
+[4] http://fleurer-lee.com/2014/11/08/cap-notes.html
 
 CAP原则又称CAP定理，指的是在一个分布式系统中， Consistency（一致性）、 Availability（可用性）、Partition tolerance（分区容错性），三者不可得兼得。
 * 一致性（**C**onsistency）：在分布式系统中的所有数据备份，在同一时刻是否同样的值。（等同于所有节点访问同一份最新的数据副本）
