@@ -2,7 +2,9 @@
 title: 《redis入门指南》读书笔记
 date: 2016-05-19 15:20:00
 tags: redis
-categories: 读书笔记
+categories:
+	- 读书笔记
+	- tech
 ---
 
 [redis文档](http://redis.io/documentation)
