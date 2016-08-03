@@ -1,14 +1,20 @@
 ---
-title: linux内核中的互斥与同步（目录）
+title: linux内核中的互斥与同步
 dte: 2016-06-19 12:37:57
 tags:
 	- kernel
 	- concurrency
-	- index
 categories: tech
 ---
 
-目录：
+产生并发的原因：
+* 中断
+* 软中断和tasklet
+* 内核抢占
+* 睡眠和用户空间同步
+* SMP
+
+内核的互斥和同步手段：
 * 原子操作
 * 信号量
 * RCU机制
