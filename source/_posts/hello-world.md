@@ -1,5 +1,6 @@
 ---
 title: Hello World
+date: 2016-05-14
 ---
 
 测试文章

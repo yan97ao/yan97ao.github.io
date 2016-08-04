@@ -1,6 +1,6 @@
 ---
 title: linux内核中的互斥与同步
-dte: 2016-06-19 12:37:57
+date: 2016-06-19 12:37:57
 tags:
 	- kernel
 	- concurrency
