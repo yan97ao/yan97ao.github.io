@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>python的常用json库对比 | yan97ao&#39;s life</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="openstack nova中典型的一次api查询操作，需要经过api-&amp;gt;conductor-&amp;gt;mysql-&amp;gt;conductor-&amp;gt;api再返回的过程，组件之间的RPC操的数据传递，都需要经过json序列化和反序列化并且API数据返回时，也需要序列化成json之后再通过wsgi返回随着数据量上升，这期间多次json序列化和反序列化的性能开销逐渐成为很严重的性能问题opens">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python的常用json库对比">
+<meta property="og:url" content="http://yan97ao.github.com/2016/06/python的常用json库对比/index.html">
+<meta property="og:site_name" content="yan97ao's life">
+<meta property="og:description" content="openstack nova中典型的一次api查询操作，需要经过api-&amp;gt;conductor-&amp;gt;mysql-&amp;gt;conductor-&amp;gt;api再返回的过程，组件之间的RPC操的数据传递，都需要经过json序列化和反序列化并且API数据返回时，也需要序列化成json之后再通过wsgi返回随着数据量上升，这期间多次json序列化和反序列化的性能开销逐渐成为很严重的性能问题opens">
+<meta property="og:updated_time" content="2016-08-03T15:44:32.641Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python的常用json库对比">
+<meta name="twitter:description" content="openstack nova中典型的一次api查询操作，需要经过api-&amp;gt;conductor-&amp;gt;mysql-&amp;gt;conductor-&amp;gt;api再返回的过程，组件之间的RPC操的数据传递，都需要经过json序列化和反序列化并且API数据返回时，也需要序列化成json之后再通过wsgi返回随着数据量上升，这期间多次json序列化和反序列化的性能开销逐渐成为很严重的性能问题opens">
+  
+    <link rel="alternative" href="/atom.xml" title="yan97ao&#39;s life" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/images/rh.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">yan97ao</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/categories/tech/">技术相关</a></li>
+				        
+							<li><a href="/categories/读书笔记/">读书笔记</a></li>
+				        
+							<li><a href="/archives">全部文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="mail" target="_blank" href="/magictao@gmail.com" title="mail">mail</a>
+					        
+								<a class="github" target="_blank" href="https://github.com/yan97ao" title="github">github</a>
+					        
+								<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/yan97ao" title="zhihu">zhihu</a>
+					        
+								<a class="douban" target="_blank" href="https://www.douban.com/people/yan97ao/" title="douban">douban</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/CAP/" style="font-size: 10px;">CAP</a> <a href="/tags/atomic/" style="font-size: 10px;">atomic</a> <a href="/tags/concurrency/" style="font-size: 20px;">concurrency</a> <a href="/tags/json/" style="font-size: 10px;">json</a> <a href="/tags/kernel/" style="font-size: 20px;">kernel</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/分布式/" style="font-size: 10px;">分布式</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">尽人事，知天命 | RAmen</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">yan97ao</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/images/rh.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">yan97ao</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/categories/tech/">技术相关</a></li>
+		        
+					<li><a href="/categories/读书笔记/">读书笔记</a></li>
+		        
+					<li><a href="/archives">全部文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="mail" target="_blank" href="/magictao@gmail.com" title="mail">mail</a>
+			        
+						<a class="github" target="_blank" href="https://github.com/yan97ao" title="github">github</a>
+			        
+						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/yan97ao" title="zhihu">zhihu</a>
+			        
+						<a class="douban" target="_blank" href="https://www.douban.com/people/yan97ao/" title="douban">douban</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-python的常用json库对比" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/06/python的常用json库对比/" class="article-date">
+  	<time datetime="2016-06-10T02:29:26.000Z" itemprop="datePublished">2016-06-10</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      python的常用json库对比
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/json/">json</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/tech/">tech</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>openstack nova中典型的一次api查询操作，需要经过api-&gt;conductor-&gt;mysql-&gt;conductor-&gt;api再返回的过程，组件之间的RPC操的数据传递，都需要经过json序列化和反序列化<br>并且API数据返回时，也需要序列化成json之后再通过wsgi返回<br>随着数据量上升，这期间多次json序列化和反序列化的性能开销逐渐成为很严重的性能问题<br>openstack本身基于微服务的架构不是很好改动，所以短期来看，更换更好性能json库也许能解决问题</p>
+<a id="more"></a>
+<p>测试环境：虚拟机一台 1 x Intel Xeon E312xx (Sandy Bridge), 1G RAM, Centos 6.5(Python 2.6.6)<br>安装pip<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">wget ttps://bootstrap.pypa.io/get-pip.py</div><div class="line">python get-pip.py</div></pre></td></tr></table></figure></p>
+<p>安装依赖<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install simplejson anyjson ujson</div></pre></td></tr></table></figure></p>
+<p>安装过程中遇到error: invalid command ‘bdist_wheel’这样报错，是因为pip和setuptools版本不兼容导致，需升级setuptools或者降级pip<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install setuptools --upgrade</div></pre></td></tr></table></figure></p>
+<p>安装过程中遇到./python/py_defines.h:39:20: 错误：Python.h：没有那个文件或目录,需安装python-devel库<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install python-devel</div></pre></td></tr></table></figure></p>
+<p>测试代码<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> wraps</div><div class="line"></div><div class="line"><span class="keyword">import</span> json</div><div class="line"><span class="keyword">import</span> simplejson</div><div class="line"><span class="keyword">import</span> anyjson</div><div class="line"><span class="keyword">import</span> ujson</div><div class="line"></div><div class="line">sample_text = &#123;</div><div class="line">    <span class="string">'words'</span>: <span class="string">"Night gathers, and now my watch begins. It shall not end until my death. I shall take no wife, hold no lands, father no children. I shall wear no crowns and win no glory. I shall live and die at my post. I am the sword in the darkness. I am the watcher on the walls. I am the fire that burns against the cold, the light that brings the dawn, the horn that wakes the sleepers, the shield that guards the realms of men. I pledge my life and honor to the Night's Watch, for this night and all the nights to come."</span>,</div><div class="line">    <span class="string">'list'</span>: range(<span class="number">100</span>),</div><div class="line">    <span class="string">'dict'</span>: dict((str(i),<span class="number">100</span>-i) <span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">100</span>)),</div><div class="line">    <span class="string">'int'</span>: <span class="number">100</span>,</div><div class="line">    <span class="string">'float'</span>: <span class="number">100.123456</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">sample_json = json.dumps(sample_text)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">call_dumps</span><span class="params">(lib)</span>:</span></div><div class="line">    t0 = time.time()</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">10000</span>):</div><div class="line">        lib.dumps(sample_text)</div><div class="line">    t1 = time.time()</div><div class="line">    <span class="keyword">print</span> <span class="string">"run %s.dump: %s seconds"</span> % (lib.__name__, str(t1-t0))</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">call_loads</span><span class="params">(lib)</span>:</span></div><div class="line">    t0 = time.time()</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">10000</span>):</div><div class="line">        lib.loads(sample_json)</div><div class="line">    t1 = time.time()</div><div class="line">    <span class="keyword">print</span> <span class="string">"run %s.loads: %s seconds"</span> % (lib.__name__, str(t1-t0))</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> [json, simplejson, anyjson, ujson]:</div><div class="line">        call_dumps(i)</div><div class="line"></div><div class="line">    <span class="keyword">print</span> <span class="string">""</span></div><div class="line"></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> [json, simplejson, anyjson, ujson]:</div><div class="line">        call_loads(i)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    main()</div></pre></td></tr></table></figure></p>
+<p>测试结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">run json.dump: 7.7235019207 seconds</div><div class="line">run simplejson.dump: 12.3510508537 seconds</div><div class="line">run anyjson.dump: 12.1558740139 seconds</div><div class="line">run ujson.dump: 0.218187093735 seconds</div><div class="line"></div><div class="line">run json.loads: 38.5133662224 seconds</div><div class="line">run simplejson.loads: 21.7097730637 seconds</div><div class="line">run anyjson.loads: 20.8557491302 seconds</div><div class="line">run ujson.loads: 0.256334781647 seconds</div></pre></td></tr></table></figure></p>
+<p>这样看来，在python 2.6.6的环境下，anyjson和simplejson相对于内置的json各有优劣，但是ujson有碾压级别的优势</p>
+<p>另外在2015年初版本的13寸rmbp上(python 2.7.11)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">run json.dump: 0.372946023941 seconds</div><div class="line">run simplejson.dump: 0.537473917007 seconds</div><div class="line">run anyjson.dump: 0.539379835129 seconds</div><div class="line">run ujson.dump: 0.123563051224 seconds</div><div class="line"></div><div class="line">run json.loads: 0.699669122696 seconds</div><div class="line">run simplejson.loads: 0.428148031235 seconds</div><div class="line">run anyjson.loads: 0.437167167664 seconds</div><div class="line">run ujson.loads: 0.16900396347 seconds</div></pre></td></tr></table></figure></p>
+<p>ujson依旧有明显优势</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/06/linux内核中的互斥与同步（目录）/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          linux内核中的互斥与同步
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/06/有关CAP/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">有关CAP</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 yan97ao
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: true
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

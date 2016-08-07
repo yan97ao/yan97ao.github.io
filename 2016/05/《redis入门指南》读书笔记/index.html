@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>《redis入门指南》读书笔记 | yan97ao&#39;s life</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="redis文档redis命令参考
+简介Redis是REmote DIctionary Server（远程字典服务器）的缩写">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《redis入门指南》读书笔记">
+<meta property="og:url" content="http://yan97ao.github.com/2016/05/《redis入门指南》读书笔记/index.html">
+<meta property="og:site_name" content="yan97ao's life">
+<meta property="og:description" content="redis文档redis命令参考
+简介Redis是REmote DIctionary Server（远程字典服务器）的缩写">
+<meta property="og:updated_time" content="2016-08-03T15:44:32.641Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《redis入门指南》读书笔记">
+<meta name="twitter:description" content="redis文档redis命令参考
+简介Redis是REmote DIctionary Server（远程字典服务器）的缩写">
+  
+    <link rel="alternative" href="/atom.xml" title="yan97ao&#39;s life" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/images/rh.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">yan97ao</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/categories/tech/">技术相关</a></li>
+				        
+							<li><a href="/categories/读书笔记/">读书笔记</a></li>
+				        
+							<li><a href="/archives">全部文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="mail" target="_blank" href="/magictao@gmail.com" title="mail">mail</a>
+					        
+								<a class="github" target="_blank" href="https://github.com/yan97ao" title="github">github</a>
+					        
+								<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/yan97ao" title="zhihu">zhihu</a>
+					        
+								<a class="douban" target="_blank" href="https://www.douban.com/people/yan97ao/" title="douban">douban</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/CAP/" style="font-size: 10px;">CAP</a> <a href="/tags/atomic/" style="font-size: 10px;">atomic</a> <a href="/tags/concurrency/" style="font-size: 20px;">concurrency</a> <a href="/tags/json/" style="font-size: 10px;">json</a> <a href="/tags/kernel/" style="font-size: 20px;">kernel</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/分布式/" style="font-size: 10px;">分布式</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">尽人事，知天命 | RAmen</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">yan97ao</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/images/rh.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">yan97ao</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/categories/tech/">技术相关</a></li>
+		        
+					<li><a href="/categories/读书笔记/">读书笔记</a></li>
+		        
+					<li><a href="/archives">全部文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="mail" target="_blank" href="/magictao@gmail.com" title="mail">mail</a>
+			        
+						<a class="github" target="_blank" href="https://github.com/yan97ao" title="github">github</a>
+			        
+						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/yan97ao" title="zhihu">zhihu</a>
+			        
+						<a class="douban" target="_blank" href="https://www.douban.com/people/yan97ao/" title="douban">douban</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-《redis入门指南》读书笔记" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/《redis入门指南》读书笔记/" class="article-date">
+  	<time datetime="2016-05-19T07:20:00.000Z" itemprop="datePublished">2016-05-19</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      《redis入门指南》读书笔记
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/读书笔记/">读书笔记</a><a class="article-category-link" href="/categories/读书笔记/tech/">tech</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="http://redis.io/documentation" target="_blank" rel="external">redis文档</a><br><a href="http://redis.io/commands" target="_blank" rel="external">redis命令参考</a></p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Redis是REmote DIctionary Server（远程字典服务器）的缩写</p>
+<a id="more"></a>
+<p>到目前为止Redis支持的键值数据类型如下：</p>
+<ul>
+<li>字符串类型</li>
+<li>散列类型</li>
+<li>列表类型</li>
+<li>集合类型</li>
+<li>有序集合类型</li>
+</ul>
+<p>性能上Redis是单线程模型，而Memcached支持多线程，所以在多核服务器上后者的性能更高一些。然而，前面已经介绍过，Redis的性能已经足够优异，在绝大部分场合下其性能都不会成为瓶颈。所以在使用时更应该关心的是二者在功能上的区别，如果需要用到高级的数据类型或是持久化等功能，Redis将会是Memcached很好的替代品。</p>
+<h2 id="redis中的字符串"><a href="#redis中的字符串" class="headerlink" title="redis中的字符串"></a>redis中的字符串</h2><p>字符串类型是Redis中最基本的数据类型，它能存储任何形式的字符串，包括二进制数据。你可以用其存储用户的邮箱、JSON化的对象甚至是一张图片。一个字符串类型键允许存储的数据的最大容量是512MB。</p>
+<h2 id="redis中的散列"><a href="#redis中的散列" class="headerlink" title="redis中的散列"></a>redis中的散列</h2><p>散列类型（hash）的键值也是一种字典结构，其存储了字段（field）和字段值的映射，但字段值只能是字符串，不支持其他数据类型，换句话说，散列类型不能嵌套其他的数据类型。一个散列类型键可以包含至多232-1个字段。</p>
+<p>散列类型适合存储对象：使用对象类别和ID构成键名，使用字段表示对象的属性，而字段值则存储属性值。</p>
+<h2 id="redis中的列表"><a href="#redis中的列表" class="headerlink" title="redis中的列表"></a>redis中的列表</h2><p>列表类型（list）可以存储一个有序的字符串列表，常用的操作是向列表两端添加元素，或者获得列表的某一个片段。列表类型内部是使用双向链表（double linked list）实现的，所以向列表两端添加元素的时间复杂度为0(1)，获取越接近两端的元素速度就越快。这意味着即使是一个有几千万个元素的列表，获取头部或尾部的10条记录也是极快的（和从只有20个元素的列表中获取头部或尾部的10条记录的速度是一样的）。</p>
+<p>与散列类型键最多能容纳的字段数量相同，一个列表类型键最多能容纳232-1个元素。</p>
+<h2 id="redis中的集合"><a href="#redis中的集合" class="headerlink" title="redis中的集合"></a>redis中的集合</h2><p>在集合中的每个元素都是不同的，且没有顺序。一个集合类型（set）键可以存储至多232-1个字符串。</p>
+<p>集合类型的常用操作是向集合中加入或删除元素、判断某个元素是否存在等，由于集合类型在Redis内部是使用值为空的散列表（hash table）实现的，所以这些操作的时间复杂度都是0(1)。最方便的是多个集合类型键之间还可以进行并集、交集和差集运算。</p>
+<h2 id="redis中的有序集合"><a href="#redis中的有序集合" class="headerlink" title="redis中的有序集合"></a>redis中的有序集合</h2><p>在集合类型的基础上有序集合类型为集合中的每个元素都关联了一个分数，这使得我们不仅可以完成插入、删除和判断元素是否存在等集合类型支持的操作，还能够获得分数最高（或最低）的前N个元素、获得指定分数范围内的元素等与分数有关的操作。虽然集合中每个元素都是不同的，但是它们的分数却可以相同。</p>
+<h2 id="redis中的事务"><a href="#redis中的事务" class="headerlink" title="redis中的事务"></a>redis中的事务</h2><p>事务可以理解为一个打包的批量执行脚本，但批量指令并非原子化的操作，中间某条指令的失败不会导致前面已做指令的回滚，也不会造成后续的指令不做<br>WATCH命令可以监控一个或多个键，一旦其中有一个键被修改（或删除），之后的事务就不会执行。监控一直持续到EXEC命令（事务中的命令是在EXEC之后才执行的</p>
+<h2 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h2><p>RDB方式：类似快照操作<br>（1）Redis使用fork函数复制一份当前进程（父进程）的副本（子进程）；<br>（2）父进程继续接收并处理客户端发来的命令，而子进程开始将内存中的数据写入硬盘中的临时文件；<br>（3）当子进程写入完所有数据后会用该临时文件替换旧的RDB文件，至此一次快照操作完成。”<br>Redis启动后会读取RDB快照文件，将数据从硬盘载入到内存。根据数据量大小与结构和服务器性能不同，这个时间也不同。通常将一个记录一千万个字符串类型键、大小为1GB的快照文件载入到内存中需要花费20～30秒钟。<br>AOF方式：类似journal<br>Redis允许同时开启AOF和RDB，既保证了数据安全又使得进行备份等操作十分容易。此时重新启动Redis后Redis会使用AOF文件来恢复数据，因为AOF方式的持久化可能丢失的数据更少。</p>
+<h2 id="主从同步"><a href="#主从同步" class="headerlink" title="主从同步"></a>主从同步</h2><p>当一个从数据库启动后，会向主数据库发送SYNC命令，主数据库接收到SYNC命令后会开始在后台保存快照（即RDB持久化的过程），并将保存期间接收到的命令缓存起来。当快照完成后，Redis会将快照文件和所有缓存的命令发送给从数据库。从数据库收到后，会载入快照文件并执行收到的缓存的命令。</p>
+<h2 id="全书实例"><a href="#全书实例" class="headerlink" title="全书实例"></a>全书实例</h2><h3 id="incr的原子性和其他实现"><a href="#incr的原子性和其他实现" class="headerlink" title="incr的原子性和其他实现"></a>incr的原子性和其他实现</h3><p>先获取再+1更新，无法保证原子性，易受其他客户端同时更新影响。<br>事务解决（WATCH），脚本解决（Redis的脚本执行是原子的，即脚本执行期间Redis不会执行其他命令。所有的命令都必须等待脚本执行完成后才能执行）</p>
+<h3 id="redis中的key"><a href="#redis中的key" class="headerlink" title="redis中的key"></a>redis中的key</h3><p>Redis对于键的命名并没有强制的要求，但比较好的实践是用“对象类型:对象ID:对象属性”来命名一个键</p>
+<h3 id="生成自增ID"><a href="#生成自增ID" class="headerlink" title="生成自增ID"></a>生成自增ID</h3><p>而在Redis中可以通过另一种模式来实现：对于每一类对象使用名为对象类型(复数形式):count① 的键（如users:count）来存储当前类型对象的数量，每增加一个新对象时都使用INCR命令递增该键的值。</p>
+<h3 id="存储文章数据"><a href="#存储文章数据" class="headerlink" title="存储文章数据"></a>存储文章数据</h3><p>由于每个字符串类型键只能存储一个字符串，而一篇博客文章是由标题、正文、作者与发布时间等多个元素构成的。为了存储这些元素，我们需要使用序列化函数将它们转换成一个字符串。除此之外因为字符串类型键可以存储二进制数据，所以也可以使用MessagePack进行序列化，速度更快，占用空间也更小。<br>但是这样的存储方式，不利于利用标题、作者、标签、时间等关键字进行查找（因为需要将整个字符串取出并反序列化），所以可以该用散列类型进行存储。</p>
+<h3 id="存储文章缩略名"><a href="#存储文章缩略名" class="headerlink" title="存储文章缩略名"></a>存储文章缩略名</h3><p>我们可以使用一个散列类型的键slug.to.id来存储文章缩略名和ID之间的映射关系。其中字段用来记录缩略名，字段值用来记录缩略名对应的ID。</p>
+<h3 id="存储文章ID列表"><a href="#存储文章ID列表" class="headerlink" title="存储文章ID列表"></a>存储文章ID列表</h3><p>我们使用列表类型键posts:list记录文章ID列表。当发布新文章时使用LPUSH命令把新文章的ID加入这个列表中，另外删除文章时也要记得把列表中的文章ID删除</p>
+<h3 id="存储文章标签"><a href="#存储文章标签" class="headerlink" title="存储文章标签"></a>存储文章标签</h3><p>考虑到一个文章的所有标签都是互不相同的，而且展示时对这些标签的排列顺序并没有要求，我们可以使用集合类型键存储文章标签。</p>
+<h3 id="通过标签搜索文章"><a href="#通过标签搜索文章" class="headerlink" title="通过标签搜索文章"></a>通过标签搜索文章</h3><p>为每个标签使用一个名为“tag:标签名称:posts”的集合类型键存储标有该标签的文章ID列表。</p>
+<h3 id="访问频次限制"><a href="#访问频次限制" class="headerlink" title="访问频次限制"></a>访问频次限制</h3><p>对每个用户使用一个名为“rate.limiting:用户IP”的字符串类型键，每次用户访问则使用INCR命令递增该键的键值，如果递增后的值是1（第一次访问页面），则同时还要设置该键的生存时间为1分钟。<br>如果要精确地保证每分钟最多访问10次，需要记录下用户每次访问的时间。因此对每个用户，我们使用一个列表类型的键来记录他最近10次访问博客的时间。一旦键中的元素超过10个，就判断时间最早的元素距现在的时间是否小于1分钟。如果是则表示用户最近1分钟的访问次数超过了10次；如果不是就将现在的时间加入到列表中，同时把最早的元素删除。<br><a href="https://zhuanlan.zhihu.com/p/20872901" target="_blank" rel="external">API 调用次数限制实现</a></p>
+<h3 id="邮件发送（长耗时任务异步解耦）"><a href="#邮件发送（长耗时任务异步解耦）" class="headerlink" title="邮件发送（长耗时任务异步解耦）"></a>邮件发送（长耗时任务异步解耦）</h3><p>任务队列顾名思义，就是“传递任务的队列”。与任务队列进行交互的实体有两类，一类是生产者（producer），一类是消费者（consumer）。生产者会将需要处理的任务放入任务队列中，而消费者则不断地从任务队列中读入任务信息并执行。<br>对于发邮件这个操作来说页面程序就是生产者，而发邮件的进程就是消费者。当需要发送邮件时，页面程序会将收件地址、邮件主题和邮件正文组装成一个任务后存入任务队列中。同时发邮件的进程会不断检查任务队列，一旦发现有新的任务便会将其从队列中取出并执行。由此实现了进程间的通信。</p>
+<h3 id="任务插入（优先级队列）"><a href="#任务插入（优先级队列）" class="headerlink" title="任务插入（优先级队列）"></a>任务插入（优先级队列）</h3><p>BRPOP命令可以同时接收多个键，其完整的命令格式为BLPOP key [key …]timeout，如BLPOP queue:1 queue:2 0。意义是同时检测多个键，如果所有键都没有元素则阻塞，如果其中有一个键有元素则会从该键中弹出元素。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/06/有关CAP/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          有关CAP
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/05/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hello World</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 yan97ao
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: true
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

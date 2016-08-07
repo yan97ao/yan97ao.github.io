@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>linux内核中的互斥与同步：原子操作 | yan97ao&#39;s life</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="https://en.wikipedia.org/wiki/Atomicity_(database_systems)
+atomic类型定义123456789typedef struct &amp;#123;	int counter;&amp;#125; atomic_t;#ifdef CONFIG_64BITtypedef struct &amp;#123;	long counter;&amp;#125; atomic64_t;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux内核中的互斥与同步：原子操作">
+<meta property="og:url" content="http://yan97ao.github.com/2016/06/linux内核中的互斥与同步：原子操作/index.html">
+<meta property="og:site_name" content="yan97ao's life">
+<meta property="og:description" content="https://en.wikipedia.org/wiki/Atomicity_(database_systems)
+atomic类型定义123456789typedef struct &amp;#123;	int counter;&amp;#125; atomic_t;#ifdef CONFIG_64BITtypedef struct &amp;#123;	long counter;&amp;#125; atomic64_t;">
+<meta property="og:updated_time" content="2016-08-03T15:44:32.641Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux内核中的互斥与同步：原子操作">
+<meta name="twitter:description" content="https://en.wikipedia.org/wiki/Atomicity_(database_systems)
+atomic类型定义123456789typedef struct &amp;#123;	int counter;&amp;#125; atomic_t;#ifdef CONFIG_64BITtypedef struct &amp;#123;	long counter;&amp;#125; atomic64_t;">
+  
+    <link rel="alternative" href="/atom.xml" title="yan97ao&#39;s life" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/images/rh.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">yan97ao</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/categories/tech/">技术相关</a></li>
+				        
+							<li><a href="/categories/读书笔记/">读书笔记</a></li>
+				        
+							<li><a href="/archives">全部文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="mail" target="_blank" href="/magictao@gmail.com" title="mail">mail</a>
+					        
+								<a class="github" target="_blank" href="https://github.com/yan97ao" title="github">github</a>
+					        
+								<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/yan97ao" title="zhihu">zhihu</a>
+					        
+								<a class="douban" target="_blank" href="https://www.douban.com/people/yan97ao/" title="douban">douban</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/CAP/" style="font-size: 10px;">CAP</a> <a href="/tags/atomic/" style="font-size: 10px;">atomic</a> <a href="/tags/concurrency/" style="font-size: 20px;">concurrency</a> <a href="/tags/json/" style="font-size: 10px;">json</a> <a href="/tags/kernel/" style="font-size: 20px;">kernel</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/分布式/" style="font-size: 10px;">分布式</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">尽人事，知天命 | RAmen</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">yan97ao</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/images/rh.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">yan97ao</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/categories/tech/">技术相关</a></li>
+		        
+					<li><a href="/categories/读书笔记/">读书笔记</a></li>
+		        
+					<li><a href="/archives">全部文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="mail" target="_blank" href="/magictao@gmail.com" title="mail">mail</a>
+			        
+						<a class="github" target="_blank" href="https://github.com/yan97ao" title="github">github</a>
+			        
+						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/yan97ao" title="zhihu">zhihu</a>
+			        
+						<a class="douban" target="_blank" href="https://www.douban.com/people/yan97ao/" title="douban">douban</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-linux内核中的互斥与同步：原子操作" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/06/linux内核中的互斥与同步：原子操作/" class="article-date">
+  	<time datetime="2016-06-19T05:21:17.000Z" itemprop="datePublished">2016-06-19</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      linux内核中的互斥与同步：原子操作
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/atomic/">atomic</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/concurrency/">concurrency</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kernel/">kernel</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/tech/">tech</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="https://en.wikipedia.org/wiki/Atomicity_(database_systems" target="_blank" rel="external">https://en.wikipedia.org/wiki/Atomicity_(database_systems</a>)</p>
+<h1 id="atomic类型定义"><a href="#atomic类型定义" class="headerlink" title="atomic类型定义"></a>atomic类型定义</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> &#123;</div><div class="line">	<span class="keyword">int</span> counter;</div><div class="line">&#125; <span class="keyword">atomic_t</span>;</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> CONFIG_64BIT</span></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> &#123;</div><div class="line">	<span class="keyword">long</span> counter;</div><div class="line">&#125; <span class="keyword">atomic64_t</span>;</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h1 id="相关API"><a href="#相关API" class="headerlink" title="相关API"></a>相关API</h1><table>
+<thead>
+<tr>
+<th>函数名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ATOMIC_INIT(i)</td>
+<td>初始化一个atomic_t</td>
+</tr>
+<tr>
+<td>atomic_read(const atomic_t *v)</td>
+<td>原子读</td>
+</tr>
+<tr>
+<td>atomic_set(atomic_t *v, int i)</td>
+<td>原子设置</td>
+</tr>
+<tr>
+<td>atomic_add(int i, atomic_t *v)</td>
+<td>原子加</td>
+</tr>
+<tr>
+<td>atomic_sub(int i, atomic_t *v)</td>
+<td>原子减</td>
+</tr>
+<tr>
+<td>atomic_sub_and_test(int i, atomic_t *v)</td>
+<td>原子减并判断是否为0</td>
+</tr>
+<tr>
+<td>atomic_inc(atomic_t *v)</td>
+<td>原子加一</td>
+</tr>
+<tr>
+<td>atomic_dec(atomic_t *v)</td>
+<td>原子减一</td>
+</tr>
+<tr>
+<td>atomic_dec_and_test(atomic_t *v)</td>
+<td>原子减一并判断是否为0</td>
+</tr>
+<tr>
+<td>atomic_inc_and_test(atomic_t *v)</td>
+<td>原子加一并判断是否为0</td>
+</tr>
+<tr>
+<td>atomic_add_negative(int i, atomic_t *v)</td>
+<td>原子加并判断是否为负数</td>
+</tr>
+<tr>
+<td>atomic_add_return(int i, atomic_t *v)</td>
+<td>原子加并返回结果</td>
+</tr>
+<tr>
+<td>atomic_sub_return(int i, atomic_t *v)</td>
+<td>原子减并返回结果</td>
+</tr>
+<tr>
+<td>atomic_cmpxchg(atomic_t *v, int old, int new)</td>
+<td>原子比较并交换</td>
+</tr>
+<tr>
+<td>atomic_xchg(atomic_t *v, int new)</td>
+<td>原子交换</td>
+</tr>
+</tbody>
+</table>
+<p>*</p>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><h2 id="x86版本实现在arch-x86-include-asm-atomic-h中，其中有两类实现方法"><a href="#x86版本实现在arch-x86-include-asm-atomic-h中，其中有两类实现方法" class="headerlink" title="x86版本实现在arch/x86/include/asm/atomic.h中，其中有两类实现方法"></a>x86版本实现在arch/x86/include/asm/atomic.h中，其中有两类实现方法</h2><p>1.直接加上LOCK_PREFIX<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> CONFIG_SMP</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> LOCK_PREFIX_HERE \</span></div><div class="line">		<span class="meta-string">".pushsection .smp_locks,\"a\"\n"</span>	\</div><div class="line">		<span class="meta-string">".balign 4\n"</span>				\</div><div class="line">		<span class="meta-string">".long 671f - .\n"</span> <span class="comment">/* offset */</span>		\</div><div class="line">		<span class="meta-string">".popsection\n"</span>				\</div><div class="line">		<span class="meta-string">"671:"</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> LOCK_PREFIX LOCK_PREFIX_HERE <span class="meta-string">"\n\tlock; "</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">else</span> <span class="comment">/* ! CONFIG_SMP */</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> LOCK_PREFIX_HERE <span class="meta-string">""</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> LOCK_PREFIX <span class="meta-string">""</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div></pre></td></tr></table></figure></p>
+<p>2.使用READ_ONCE和WRITE_ONCE<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">define</span> __READ_ONCE(x, check)						\</span></div><div class="line">(&#123;									\</div><div class="line">	union &#123; typeof(x) __val; char __c[1]; &#125; __u;			\</div><div class="line">	<span class="meta-keyword">if</span> (check)							\</div><div class="line">		__read_once_size(&amp;(x), __u.__c, sizeof(x));		\</div><div class="line">	<span class="meta-keyword">else</span>								\</div><div class="line">		__read_once_size_nocheck(&amp;(x), __u.__c, sizeof(x));	\</div><div class="line">	__u.__val;							\</div><div class="line">&#125;)</div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> READ_ONCE(x) __READ_ONCE(x, 1)</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> __READ_ONCE_SIZE						\</span></div><div class="line">(&#123;									\</div><div class="line">	switch (size) &#123;							\</div><div class="line">	case 1: *(__u8 *)res = *(volatile __u8 *)p; break;		\</div><div class="line">	case 2: *(__u16 *)res = *(volatile __u16 *)p; break;		\</div><div class="line">	case 4: *(__u32 *)res = *(volatile __u32 *)p; break;		\</div><div class="line">	case 8: *(__u64 *)res = *(volatile __u64 *)p; break;		\</div><div class="line">	default:							\</div><div class="line">		barrier();						\</div><div class="line">		__builtin_memcpy((void *)res, (const void *)p, size);	\</div><div class="line">		barrier();						\</div><div class="line">	&#125;								\</div><div class="line">&#125;)</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="number">__</span>always_inline</div><div class="line"><span class="keyword">void</span> <span class="number">__</span>read_once_size(<span class="keyword">const</span> <span class="keyword">volatile</span> <span class="keyword">void</span> *p, <span class="keyword">void</span> *res, <span class="keyword">int</span> size)</div><div class="line">&#123;</div><div class="line">	<span class="number">__</span>READ_ONCE_SIZE;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">define</span> WRITE_ONCE(x, val) \</span></div><div class="line">(&#123;							\</div><div class="line">	union &#123; typeof(x) __val; char __c[1]; &#125; __u =	\</div><div class="line">		&#123; .__val = (__force typeof(x)) (val) &#125;; \</div><div class="line">	__write_once_size(&amp;(x), __u.__c, sizeof(x));	\</div><div class="line">	__u.__val;					\</div><div class="line">&#125;)</div><div class="line"><span class="keyword">static</span> <span class="number">__</span>always_inline <span class="keyword">void</span> <span class="number">__</span>write_once_size(<span class="keyword">volatile</span> <span class="keyword">void</span> *p, <span class="keyword">void</span> *res, <span class="keyword">int</span> size)</div><div class="line">&#123;</div><div class="line">	<span class="keyword">switch</span> (size) &#123;</div><div class="line">	<span class="keyword">case</span> <span class="number">1</span>: *(<span class="keyword">volatile</span> <span class="number">__u</span>8 *)p = *(<span class="number">__u</span>8 *)res; <span class="keyword">break</span>;</div><div class="line">	<span class="keyword">case</span> <span class="number">2</span>: *(<span class="keyword">volatile</span> <span class="number">__u</span>16 *)p = *(<span class="number">__u</span>16 *)res; <span class="keyword">break</span>;</div><div class="line">	<span class="keyword">case</span> <span class="number">4</span>: *(<span class="keyword">volatile</span> <span class="number">__u</span>32 *)p = *(<span class="number">__u</span>32 *)res; <span class="keyword">break</span>;</div><div class="line">	<span class="keyword">case</span> <span class="number">8</span>: *(<span class="keyword">volatile</span> <span class="number">__u</span>64 *)p = *(<span class="number">__u</span>64 *)res; <span class="keyword">break</span>;</div><div class="line">	<span class="keyword">default</span>:</div><div class="line">		barrier();</div><div class="line">		<span class="number">__b</span>uiltin_memcpy((<span class="keyword">void</span> *)p, (<span class="keyword">const</span> <span class="keyword">void</span> *)res, size);</div><div class="line">		barrier();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>另外还会根据具体的指令集支持情况选取atomic64_32.h和atomic64_64.h中的atomic64_t相关API实现，不再赘述</p>
+<h2 id="ia64版本实现在arch-ia64-include-asm-atomic-h中"><a href="#ia64版本实现在arch-ia64-include-asm-atomic-h中" class="headerlink" title="ia64版本实现在arch/ia64/include/asm/atomic.h中"></a>ia64版本实现在arch/ia64/include/asm/atomic.h中</h2><p>这个文件中利用宏展开生成了很多重复性的代码，看起来非常舒服<br>在read和set时，同样使用了READ_ONCE和WRITE_ONCE<br>但是对于其他操作，没有使用LOCK_PREFIX，而是根据情况使用了ia64_fetch_and_add或者ia64<em>atomic64</em>##op</p>
+<h1 id="典型应用"><a href="#典型应用" class="headerlink" title="典型应用"></a>典型应用</h1><p>维护各种引用计数</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p>[1] Documentation/atomic_ops.txt</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/08/nanomsg-API/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          nanomsg-API
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/06/linux内核中的互斥与同步（目录）/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">linux内核中的互斥与同步</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 yan97ao
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: true
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>有关CAP | yan97ao&#39;s life</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="读到了四篇非常不错的文章：[1] https://zhuanlan.zhihu.com/p/20399316[2] https://codahale.com/you-cant-sacrifice-partition-tolerance/[3] http://www.infoq.com/cn/articles/cap-twelve-years-later-how-the-rules-have-cha">
+<meta property="og:type" content="article">
+<meta property="og:title" content="有关CAP">
+<meta property="og:url" content="http://yan97ao.github.com/2016/06/有关CAP/index.html">
+<meta property="og:site_name" content="yan97ao's life">
+<meta property="og:description" content="读到了四篇非常不错的文章：[1] https://zhuanlan.zhihu.com/p/20399316[2] https://codahale.com/you-cant-sacrifice-partition-tolerance/[3] http://www.infoq.com/cn/articles/cap-twelve-years-later-how-the-rules-have-cha">
+<meta property="og:updated_time" content="2016-08-03T15:44:32.641Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="有关CAP">
+<meta name="twitter:description" content="读到了四篇非常不错的文章：[1] https://zhuanlan.zhihu.com/p/20399316[2] https://codahale.com/you-cant-sacrifice-partition-tolerance/[3] http://www.infoq.com/cn/articles/cap-twelve-years-later-how-the-rules-have-cha">
+  
+    <link rel="alternative" href="/atom.xml" title="yan97ao&#39;s life" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/images/rh.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">yan97ao</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/categories/tech/">技术相关</a></li>
+				        
+							<li><a href="/categories/读书笔记/">读书笔记</a></li>
+				        
+							<li><a href="/archives">全部文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="mail" target="_blank" href="/magictao@gmail.com" title="mail">mail</a>
+					        
+								<a class="github" target="_blank" href="https://github.com/yan97ao" title="github">github</a>
+					        
+								<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/yan97ao" title="zhihu">zhihu</a>
+					        
+								<a class="douban" target="_blank" href="https://www.douban.com/people/yan97ao/" title="douban">douban</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/CAP/" style="font-size: 10px;">CAP</a> <a href="/tags/atomic/" style="font-size: 10px;">atomic</a> <a href="/tags/concurrency/" style="font-size: 20px;">concurrency</a> <a href="/tags/json/" style="font-size: 10px;">json</a> <a href="/tags/kernel/" style="font-size: 20px;">kernel</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/分布式/" style="font-size: 10px;">分布式</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">尽人事，知天命 | RAmen</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">yan97ao</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/images/rh.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">yan97ao</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/categories/tech/">技术相关</a></li>
+		        
+					<li><a href="/categories/读书笔记/">读书笔记</a></li>
+		        
+					<li><a href="/archives">全部文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="mail" target="_blank" href="/magictao@gmail.com" title="mail">mail</a>
+			        
+						<a class="github" target="_blank" href="https://github.com/yan97ao" title="github">github</a>
+			        
+						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/yan97ao" title="zhihu">zhihu</a>
+			        
+						<a class="douban" target="_blank" href="https://www.douban.com/people/yan97ao/" title="douban">douban</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-有关CAP" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/06/有关CAP/" class="article-date">
+  	<time datetime="2016-06-04T13:29:25.000Z" itemprop="datePublished">2016-06-04</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      有关CAP
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CAP/">CAP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式/">分布式</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/tech/">tech</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>读到了四篇非常不错的文章：<br>[1] <a href="https://zhuanlan.zhihu.com/p/20399316" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/20399316</a><br>[2] <a href="https://codahale.com/you-cant-sacrifice-partition-tolerance/" target="_blank" rel="external">https://codahale.com/you-cant-sacrifice-partition-tolerance/</a><br>[3] <a href="http://www.infoq.com/cn/articles/cap-twelve-years-later-how-the-rules-have-changed/" target="_blank" rel="external">http://www.infoq.com/cn/articles/cap-twelve-years-later-how-the-rules-have-changed/</a><br>[4] <a href="http://fleurer-lee.com/2014/11/08/cap-notes.html" target="_blank" rel="external">http://fleurer-lee.com/2014/11/08/cap-notes.html</a></p>
+<p>CAP原则又称CAP定理，指的是在一个分布式系统中， Consistency（一致性）、 Availability（可用性）、Partition tolerance（分区容错性），三者不可得兼得。</p>
+<ul>
+<li>一致性（<strong>C</strong>onsistency）：在分布式系统中的所有数据备份，在同一时刻是否同样的值。（等同于所有节点访问同一份最新的数据副本）</li>
+<li>可用性（<strong>A</strong>vailability）：在集群中一部分节点故障后，集群整体是否还能响应客户端的读写请求。（对数据更新具备高可用性）</li>
+<li>分区容错性（<strong>P</strong>artition tolerance）：以实际效果而言，分区相当于对通信的时限要求。系统如果不能在时限内达成数据一致性，就意味着发生了分区的情况，必须就当前操作在C和A之间做出选择。</li>
+</ul>
+<a id="more"></a>
+<p>关于CAP理论的介绍，文章1写的非常聪明，比较了多种典型设计方案下的CAP折衷</p>
+<p>CAP是一种分布式系统设计时的trade off，也就是说在一些场景下，上述要求只能同时满足2个，而无论如何做不到同时满足CAP。</p>
+<p>而实际上，抛开P而只谈AC是没有意义的，我们关注更多的，都是发生了P的场景下，该保证A还是C的问题（文章2）。在现实世界中，因为存在网络延时等原因，时时刻刻都有P情况的发生，而随后由于消息到达而得到修正。如果网络情况严重恶化造成丢包甚至网络不可达（也就是延迟无限大），就造成了广义上的P发生。在分布式设计中采用的二阶段提交协议和paxos等，都是在一定程度上避免/推迟进入A还是C的抉择</p>
+<p>如果在P发生时选择C，那么我们就必须限制可能造成不一致的所有操作，降低系统的可用性。这样的好处是当系统从P状态恢复时，我们可以直接恢复到之前的工作状态。<br>如果在P发生时选择A，我们依旧可以向用户提供完整服务（可用性），但是这将不可避免的带来脑裂问题。而当系统从P状态恢复时，就不得不面临数据合并的问题。在数据合并时，通常采用的方式是先回到分区钱的状态，再把所有分区的操作按照时间顺序回放。但是在很多场景下依旧会有不能合并的情况出现，这就需要人工介入进行处理了（如git不能自动merge的场景）</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/06/python的常用json库对比/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          python的常用json库对比
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/05/《redis入门指南》读书笔记/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">《redis入门指南》读书笔记</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 yan97ao
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: true
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
